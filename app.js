@@ -3,7 +3,10 @@ const selectedImage = document.getElementById("displayImage");
 const prevImg = document.getElementById("prev");
 const nextImg = document.getElementById("next");
 const imgArray = []
-let indexPosition = 0
+let currentImgPosition = 0;
+
+
+
 
 // This function calls the API //
 async function getImages() {
@@ -17,7 +20,7 @@ getImages();
 // This function takes the data from the API and creates image elements with the URL's as a source //
 
 async function displayImages(data) {
-    data.forEach(function (thumbnailObject) {
+    data.forEach(function (thumbnailObject, index) {
         const thumbnail = document.createElement("img");
         thumbnail.src = thumbnailObject.urls.thumb;
         thumbnail.alt = thumbnailObject.alt_description;
@@ -25,33 +28,45 @@ async function displayImages(data) {
         document.getElementById("thumbnails").appendChild(thumbnail);
 // Push imgs to array //
         imgArray.push(thumbnail.src);
-        console.log(imgArray);
 // Make the image larger on click //
         thumbnail.addEventListener("click", function () {  
             selectedImage.src = thumbnailObject.urls.full;
             selectedImage.alt = thumbnailObject.alt_description;
             selectedImage.classList.add("displayImage");
+            currentImgPosition = index;
+            console.log(index);
             });
     });
 };
 
-displayImages();
+// Functions to cycle left and right through img thumbnails. 
 
 nextImg.addEventListener("click", function() {
-    indexPosition++;
-    selectedImage.src = imgArray[indexPosition];
-    if (indexPosition === 10) {
-        indexPosition = 0
+    if (currentImgPosition === 9) {
+        currentImgPosition = 0
+        selectedImage.src = imgArray[currentImgPosition];
+    } else {
+        currentImgPosition++;
+        selectedImage.src = imgArray[currentImgPosition];
     }
-});
+ } );
 
-prevImg.addEventListener("click", function() {
-    indexPosition--;
-    selectedImage.src = imgArray[indexPosition];
-    if (indexPosition === 0) {
-        indexPosition = 10
+ prevImg.addEventListener("click", function() {
+    if (currentImgPosition === 0) {
+        currentImgPosition = 9
+        selectedImage.src = imgArray[currentImgPosition];
+    } else {
+        currentImgPosition--;
+        selectedImage.src = imgArray[currentImgPosition];
     }
-});
+ } );
+
+
+
+
+// --------------------- //
+
+
 
 
 

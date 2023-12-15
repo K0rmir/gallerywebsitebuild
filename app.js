@@ -1,12 +1,9 @@
 const galleryContainer = document.getElementById("galleryContainer");
 const selectedImage = document.getElementById("displayImage");
-const prevImg = document.getElementById("prev");
-const nextImg = document.getElementById("next");
+const clickprevImg = document.getElementById("prev");
+const clicknextImg = document.getElementById("next");
 const imgArray = []
 let currentImgPosition = 0;
-
-
-
 
 // This function calls the API //
 async function getImages() {
@@ -39,9 +36,9 @@ async function displayImages(data) {
     });
 };
 
-// Functions to cycle left and right through img thumbnails. 
+// Functions to cycle left and right through img thumbnails //
 
-nextImg.addEventListener("click", function() {
+function nextImg () {
     if (currentImgPosition === 9) {
         currentImgPosition = 0
         selectedImage.src = imgArray[currentImgPosition];
@@ -49,9 +46,9 @@ nextImg.addEventListener("click", function() {
         currentImgPosition++;
         selectedImage.src = imgArray[currentImgPosition];
     }
- } );
+ };
 
- prevImg.addEventListener("click", function() {
+function prevImg() {
     if (currentImgPosition === 0) {
         currentImgPosition = 9
         selectedImage.src = imgArray[currentImgPosition];
@@ -59,10 +56,31 @@ nextImg.addEventListener("click", function() {
         currentImgPosition--;
         selectedImage.src = imgArray[currentImgPosition];
     }
- } );
+ };
 
+// Event listeners to cycle through images on click //
 
+clicknextImg.addEventListener("click", function() {
+    nextImg();
+})
 
+clickprevImg.addEventListener("click", function() {
+    prevImg();
+ });
+
+ // Event listeners to cycle through images in left/right arrow key press //
+
+window.addEventListener("keydown", function (event){
+    if (event.code === "ArrowLeft") {
+        prevImg();
+    }
+ });
+
+window.addEventListener("keydown", function (event){
+    if (event.code === "ArrowRight") {
+        nextImg();
+    }
+ });
 
 // --------------------- //
 

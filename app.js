@@ -3,6 +3,7 @@ const selectedImage = document.getElementById("displayImage");
 const clickprevImg = document.getElementById("prev");
 const clicknextImg = document.getElementById("next");
 const imgArray = []
+const imgArrayFull = []
 let currentImgPosition = 0;
 
 // This function calls the API //
@@ -25,13 +26,14 @@ async function displayImages(data) {
         document.getElementById("thumbnails").appendChild(thumbnail);
 // Push imgs to array //
         imgArray.push(thumbnail.src);
+        imgArrayFull.push(thumbnailObject.urls.full);
 // Make the image larger on click //
         thumbnail.addEventListener("click", function () {  
             selectedImage.src = thumbnailObject.urls.full;
             selectedImage.alt = thumbnailObject.alt_description;
             selectedImage.classList.add("displayImage");
             currentImgPosition = index;
-            console.log(index);
+            
             });
     });
 };
@@ -41,22 +43,22 @@ async function displayImages(data) {
 function nextImg () {
     if (currentImgPosition === 9) {
         currentImgPosition = 0
-        selectedImage.src = imgArray[currentImgPosition];
+        selectedImage.src = imgArrayFull[currentImgPosition];
     } else {
         currentImgPosition++;
-        selectedImage.src = imgArray[currentImgPosition];
+        selectedImage.src = imgArrayFull[currentImgPosition];
     }
- };
+};
 
 function prevImg() {
     if (currentImgPosition === 0) {
         currentImgPosition = 9
-        selectedImage.src = imgArray[currentImgPosition];
+        selectedImage.src = imgArrayFull[currentImgPosition];
     } else {
         currentImgPosition--;
-        selectedImage.src = imgArray[currentImgPosition];
+        selectedImage.src = imgArrayFull[currentImgPosition];
     }
- };
+};
 
 // Event listeners to cycle through images on click //
 
@@ -66,7 +68,7 @@ clicknextImg.addEventListener("click", function() {
 
 clickprevImg.addEventListener("click", function() {
     prevImg();
- });
+});
 
  // Event listeners to cycle through images in left/right arrow key press //
 
@@ -74,13 +76,13 @@ window.addEventListener("keydown", function (event){
     if (event.code === "ArrowLeft") {
         prevImg();
     }
- });
+});
 
 window.addEventListener("keydown", function (event){
     if (event.code === "ArrowRight") {
         nextImg();
     }
- });
+});
 
 // --------------------- //
 

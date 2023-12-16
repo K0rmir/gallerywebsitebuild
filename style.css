@@ -17,7 +17,7 @@ body {
     position: fixed;
     bottom: 0;
     z-index: 1;
-   
+    margin-left: 200px;
 }
 
 .thumbnail {
@@ -52,12 +52,15 @@ body {
 #imageShowcase {
     display: flex;
     justify-content: center;
-   
 }
 
 #displayImage {
     width: 100%;
     height: 100vh;
+}
+
+.selectedThumbnail {
+    border: 3px solid white;
 }
 
 

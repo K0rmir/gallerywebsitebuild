@@ -6,6 +6,8 @@ const imgArray = []
 const imgArrayFull = []
 let currentImgPosition = 0;
 
+// ----------------- //
+
 // This function calls the API //
 async function getImages() {
     const response = await fetch ("https://api.unsplash.com/search/photos?query=planets&per_page=10&orientation=landscape&client_id=ktSsmhPqav1bu-7fZIYJRJUE0PzY1B5vKjCzjfMF1gA");
@@ -48,6 +50,7 @@ function nextImg () {
         currentImgPosition++;
         selectedImage.src = imgArrayFull[currentImgPosition];
     }
+    updateThumbnailHighlight();
 };
 
 function prevImg() {
@@ -58,19 +61,31 @@ function prevImg() {
         currentImgPosition--;
         selectedImage.src = imgArrayFull[currentImgPosition];
     }
+    updateThumbnailHighlight();
+};
+
+// Function to highlight the thumbnail of the current image //
+
+function updateThumbnailHighlight() {
+    const thumbnails = document.getElementsByClassName('thumbnail');
+    for (let i = 0; i < thumbnails.length; i++) {
+      thumbnails[i].classList.remove('selectedThumbnail');
+    }
+
+    thumbnails[currentImgPosition].classList.add('selectedThumbnail');
 };
 
 // Event listeners to cycle through images on click //
 
 clicknextImg.addEventListener("click", function() {
     nextImg();
-})
+});
 
 clickprevImg.addEventListener("click", function() {
     prevImg();
 });
 
- // Event listeners to cycle through images in left/right arrow key press //
+ // Event listeners to cycle through images on left/right arrow key press //
 
 window.addEventListener("keydown", function (event){
     if (event.code === "ArrowLeft") {

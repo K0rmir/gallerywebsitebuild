@@ -2,6 +2,7 @@ const galleryContainer = document.getElementById("galleryContainer");
 const selectedImage = document.getElementById("displayImage");
 const clickprevImg = document.getElementById("prev");
 const clicknextImg = document.getElementById("next");
+const thumbnails = document.getElementsByClassName('thumbnail');
 const imgArray = []
 const imgArrayFull = []
 let currentImgPosition = 0;
@@ -29,14 +30,14 @@ async function displayImages(data) {
 // Push imgs to array //
         imgArray.push(thumbnail.src);
         imgArrayFull.push(thumbnailObject.urls.full);
-// Make the image larger on click //
+// Make the image larger on click & highlight //
         thumbnail.addEventListener("click", function () {  
             selectedImage.src = thumbnailObject.urls.full;
             selectedImage.alt = thumbnailObject.alt_description;
             selectedImage.classList.add("displayImage");
             currentImgPosition = index;
-            
-            });
+            updateThumbnailHighlight();
+        });         
     });
 };
 
@@ -67,7 +68,6 @@ function prevImg() {
 // Function to highlight the thumbnail of the current image //
 
 function updateThumbnailHighlight() {
-    const thumbnails = document.getElementsByClassName('thumbnail');
     for (let i = 0; i < thumbnails.length; i++) {
       thumbnails[i].classList.remove('selectedThumbnail');
     }

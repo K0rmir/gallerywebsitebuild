@@ -61,6 +61,8 @@ body {
 
 .selectedThumbnail {
     border: 3px solid white;
+    width: 165px;
+    height: 115px;
 }
 
 
